@@ -33,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
 
 const validationSchema = yup.object({
   username: yup.string().required(),
+  email: yup.string().required(),
   password: yup.string().required(),
+  confirmPassword: yup.string().required(),
 });
 
 const Login: React.FC = () => {
@@ -41,36 +43,68 @@ const Login: React.FC = () => {
   const history = useHistory();
 
   const submitHandler = async (data: any, { setSubmitting }: any) => {
+    if (
+      !data.password ||
+      !data.confirmPassword ||
+      data.password !== data.confirmPassword
+    ) {
+      return;
+    }
+
     setSubmitting(true);
     console.log("submit: ", data);
-    try {
-      const user = await Auth.signIn(data.username, data.password);
-      console.log(user);
-      history.push("/");
-    } catch (error) {
-      console.log("error signing in", error);
-    }
+    await signUp(data.username, data.password, data.email);
     setSubmitting(false);
   };
+
+  async function signUp(username: string, password: string, email: string) {
+    try {
+      const { user } = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          email,
+        },
+      });
+      console.log(user);
+
+      history.push("/welcome");
+    } catch (error) {
+      console.log("error signing up:", error);
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign up
         </Typography>
         <Formik
-          initialValues={{ username: "", password: "" }}
+          initialValues={{
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          }}
           onSubmit={submitHandler}
           validationSchema={validationSchema}
         >
           {({ values, errors, isSubmitting }) => (
             <Form className={classes.form}>
               <MyTextField placeholder="Username" name="username" />
+
+              <MyTextField placeholder="Email Address" name="email" />
               <MyTextField
                 placeholder="Password"
                 name="password"
+                type="password"
+              />
+
+              <MyTextField
+                placeholder="Confirm Password"
+                name="confirmPassword"
                 type="password"
               />
 
@@ -82,21 +116,8 @@ const Login: React.FC = () => {
                 color="primary"
                 disabled={isSubmitting}
               >
-                Sign in
+                Sign Up
               </Button>
-
-              <Grid container>
-                <Grid item xs>
-                  <Link href="/forgetpassword" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
 
               <pre style={{ textAlign: "left" }}>
                 {JSON.stringify(values, null, 2)}
