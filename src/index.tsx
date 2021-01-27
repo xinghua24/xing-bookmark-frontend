@@ -10,8 +10,6 @@ Amplify.configure({
   aws_cognito_region: "us-east-1",
   aws_user_pools_id: process.env.REACT_APP_USERPOOL_ID,
   aws_user_pools_web_client_id: process.env.REACT_APP_USERPOOL_WEB_CLIENT_ID,
-  // aws_user_pools_id: "us-east-1_Ct0xFtcek",
-  // aws_user_pools_web_client_id: "7t5l31vkinn532uqae0206kkvg",
 });
 ReactDOM.render(
   <React.StrictMode>

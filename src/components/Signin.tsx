@@ -36,7 +36,7 @@ const validationSchema = yup.object({
   password: yup.string().required(),
 });
 
-const Login: React.FC = () => {
+const Signin: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
@@ -112,4 +112,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Signin;
