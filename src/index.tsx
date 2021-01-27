@@ -5,6 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import Amplify from "aws-amplify";
+import { Provider } from "react-redux";
+import store from "./store";
 
 Amplify.configure({
   aws_cognito_region: "us-east-1",
@@ -12,9 +14,11 @@ Amplify.configure({
   aws_user_pools_web_client_id: process.env.REACT_APP_USERPOOL_WEB_CLIENT_ID,
 });
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 

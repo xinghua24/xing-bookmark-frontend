@@ -11,6 +11,8 @@ import * as yup from "yup";
 import MyTextField from "../formcontrols/MyTextField";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../store/user";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +41,7 @@ const validationSchema = yup.object({
 const Signin: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const submitHandler = async (data: any, { setSubmitting }: any) => {
     setSubmitting(true);
@@ -46,11 +49,13 @@ const Signin: React.FC = () => {
     try {
       const user = await Auth.signIn(data.username, data.password);
       console.log(user);
+      await dispatch(loginSuccess(user.username));
+      setSubmitting(false);
       history.push("/");
     } catch (error) {
+      setSubmitting(false);
       console.log("error signing in", error);
     }
-    setSubmitting(false);
   };
 
   return (

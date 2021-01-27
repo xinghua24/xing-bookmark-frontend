@@ -6,9 +6,11 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { Button, Link } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const history = useHistory();
+  const username = useSelector((state: any) => state.user.username);
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -29,7 +31,16 @@ function Navbar() {
   }));
   const classes = useStyles();
 
-  const NavButtons = (
+  const NavButtons = username ? (
+    <Button
+      color="inherit"
+      onClick={() => {
+        history.push("/signout");
+      }}
+    >
+      Signout
+    </Button>
+  ) : (
     <>
       <Button
         color="inherit"
@@ -54,7 +65,12 @@ function Navbar() {
       <Container maxWidth="md">
         <Toolbar className={classes.toolbar}>
           <Typography variant="h5" className={classes.title}>
-            <Link href="/" color="inherit" underline="none">
+            <Link
+              color="inherit"
+              underline="none"
+              href="#"
+              onClick={() => history.push("/")}
+            >
               Bookmarks
             </Link>
           </Typography>
