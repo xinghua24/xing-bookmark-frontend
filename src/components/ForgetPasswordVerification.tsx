@@ -1,7 +1,7 @@
 import React from "react";
 
 function ForgetPasswordVerification() {
-  return <div></div>;
+  return <div>ForgetPasswordVerification</div>;
 }
 
 export default ForgetPasswordVerification;

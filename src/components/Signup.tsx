@@ -67,7 +67,7 @@ const Login: React.FC = () => {
       });
       console.log(user);
 
-      history.push("/welcome");
+      history.push("/verifySignup");
     } catch (error) {
       console.log("error signing up:", error);
     }

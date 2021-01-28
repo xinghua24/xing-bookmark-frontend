@@ -12,6 +12,7 @@ import ConfirmSignup from "./components/ConfirmSignup";
 import Navbar from "./components/Navbar";
 import Signin from "./components/Signin";
 import { Container } from "@material-ui/core";
+import VerifySignup from "./components/VerifySignup";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -32,13 +33,16 @@ function App() {
             <Route path="/signup" exact>
               <Signup />
             </Route>
+            <Route path="/verifySignup" exact>
+              <VerifySignup />
+            </Route>
             <Route path="/confirmsignup" exact>
               <ConfirmSignup />
             </Route>
             <Route path="/changepassword" exact>
               <ChangePassword />
             </Route>
-            <Route path="/changepasswordconfirm exact">
+            <Route path="/changepasswordconfirm" exact>
               <ChangePasswordConfirm />
             </Route>
             <Route path="/forgetpassword" exact>
