@@ -14,16 +14,8 @@ import Signin from "./components/Signin";
 import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  main: { maxWidth: "md", margin: "0 auto" },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
+  root: {},
+  title: {},
 }));
 
 function App() {
