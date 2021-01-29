@@ -21,16 +21,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     textAlign: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  error: {
+    color: "#f00",
   },
 }));
 
@@ -44,7 +43,10 @@ const Signin: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const submitHandler = async (data: any, { setSubmitting }: any) => {
+  const submitHandler = async (
+    data: any,
+    { setSubmitting, setErrors }: any
+  ) => {
     setSubmitting(true);
     console.log("submit: ", data);
     try {
@@ -54,8 +56,8 @@ const Signin: React.FC = () => {
       setSubmitting(false);
       history.push("/");
     } catch (error) {
+      setErrors(error);
       setSubmitting(false);
-      console.log("error signing in", error);
     }
   };
 
@@ -103,6 +105,10 @@ const Signin: React.FC = () => {
                   </Link>
                 </Grid>
               </Grid>
+
+              {"message" in errors ? (
+                <div className={classes.error}>{errors["message"]}</div>
+              ) : null}
 
               <pre style={{ textAlign: "left" }}>
                 {JSON.stringify(values, null, 2)}

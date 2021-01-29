@@ -17,16 +17,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     textAlign: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  error: {
+    color: "#f00",
   },
 }));
 
@@ -41,7 +40,10 @@ const Login: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const submitHandler = async (data: any, { setSubmitting }: any) => {
+  const submitHandler = async (
+    data: any,
+    { setSubmitting, setErrors }: any
+  ) => {
     if (
       !data.password ||
       !data.confirmPassword ||
@@ -52,11 +54,16 @@ const Login: React.FC = () => {
 
     setSubmitting(true);
     console.log("submit: ", data);
-    await signUp(data.username, data.password, data.email);
+    await signUp(data.username, data.password, data.email, setErrors);
     setSubmitting(false);
   };
 
-  async function signUp(username: string, password: string, email: string) {
+  async function signUp(
+    username: string,
+    password: string,
+    email: string,
+    setErrors: any
+  ) {
     try {
       const { user } = await Auth.signUp({
         username,
@@ -69,6 +76,7 @@ const Login: React.FC = () => {
 
       history.push("/verifySignup");
     } catch (error) {
+      setErrors(error);
       console.log("error signing up:", error);
     }
   }
@@ -117,6 +125,10 @@ const Login: React.FC = () => {
               >
                 Sign Up
               </Button>
+
+              {"message" in errors ? (
+                <div className={classes.error}>{errors["message"]}</div>
+              ) : null}
 
               <pre style={{ textAlign: "left" }}>
                 {JSON.stringify(values, null, 2)}

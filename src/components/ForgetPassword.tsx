@@ -9,7 +9,6 @@ import * as yup from "yup";
 import MyTextField from "../formcontrols/MyTextField";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  error: {
+    color: "#f00",
+  },
 }));
 
 const validationSchema = yup.object({
@@ -38,9 +40,11 @@ const validationSchema = yup.object({
 const ForgetPassword: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
 
-  const submitHandler = async (data: any, { setSubmitting }: any) => {
+  const submitHandler = async (
+    data: any,
+    { setSubmitting, setErrors }: any
+  ) => {
     setSubmitting(true);
     console.log("submit: ", data);
     try {
@@ -51,6 +55,7 @@ const ForgetPassword: React.FC = () => {
         search: "?email=" + data.email,
       });
     } catch (error) {
+      setErrors(error);
       setSubmitting(false);
       console.log("error", error);
     }
@@ -85,6 +90,10 @@ const ForgetPassword: React.FC = () => {
               >
                 Send Reset Code
               </Button>
+
+              {"message" in errors ? (
+                <div className={classes.error}>{errors["message"]}</div>
+              ) : null}
 
               <pre style={{ textAlign: "left" }}>
                 {JSON.stringify(values, null, 2)}
