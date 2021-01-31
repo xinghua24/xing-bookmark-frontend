@@ -1,19 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { Button, Link } from "@material-ui/core";
+import { Button, IconButton, Link, Menu, MenuItem } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Auth } from "aws-amplify";
 import { logoutSuccess } from "../store/user";
+import { AccountCircle } from "@material-ui/icons";
 
 function Navbar() {
   const history = useHistory();
   const dispatch = useDispatch();
   const username = useSelector((state: any) => state.user.username);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -37,22 +49,39 @@ function Navbar() {
   async function signOut() {
     try {
       await Auth.signOut();
+      dispatch(logoutSuccess());
+      history.push("/signin");
     } catch (error) {
       console.log("error signing out: ", error);
     }
   }
 
+  async function handleChangePassword() {
+    history.push("/changepassword");
+  }
+
   const NavButtons = username ? (
-    <Button
-      color="inherit"
-      onClick={async () => {
-        await signOut();
-        await dispatch(logoutSuccess());
-        history.push("/signin");
-      }}
-    >
-      Signout
-    </Button>
+    <>
+      <IconButton
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        onClick={handleClick}
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
+        <MenuItem onClick={signOut}>Sign out</MenuItem>
+      </Menu>
+    </>
   ) : (
     <>
       <Button

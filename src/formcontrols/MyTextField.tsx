@@ -16,6 +16,7 @@ const MyTextField: React.FC<FieldAttributes<{}>> = ({
       type={type}
       fullWidth
       placeholder={placeholder}
+      label={placeholder}
       {...field}
       helperText={errorText}
       error={!!errorText}

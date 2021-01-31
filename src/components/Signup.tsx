@@ -101,7 +101,6 @@ const Login: React.FC = () => {
           {({ values, errors, isSubmitting }) => (
             <Form className={classes.form}>
               <MyTextField placeholder="Username" name="username" />
-
               <MyTextField placeholder="Email Address" name="email" />
               <MyTextField
                 placeholder="Password"
