@@ -48,7 +48,7 @@ const ForgetPassword: React.FC = () => {
     setSubmitting(true);
     console.log("submit: ", data);
     try {
-      const result: any = await Auth.forgotPassword(data.email);
+      await Auth.forgotPassword(data.email);
       setSubmitting(false);
       history.push({
         pathname: "/forgetpasswordverification",

@@ -9,7 +9,6 @@ import * as yup from "yup";
 import MyTextField from "../formcontrols/MyTextField";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,7 +40,6 @@ const validationSchema = yup.object({
 const ChangePassword: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
-  const username = useSelector((state: any) => state.user.username);
 
   const submitHandler = async (
     data: any,

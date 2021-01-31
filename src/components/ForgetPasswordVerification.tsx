@@ -8,7 +8,7 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import MyTextField from "../formcontrols/MyTextField";
 import { Auth } from "aws-amplify";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import queryString from "query-string";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,11 +50,7 @@ const ForgetPasswordVerification: React.FC = () => {
     setSubmitting(true);
     console.log("submit: ", data);
     try {
-      const result: any = await Auth.forgotPasswordSubmit(
-        email,
-        data.resetCode,
-        data.newPassword
-      );
+      await Auth.forgotPasswordSubmit(email, data.resetCode, data.newPassword);
       setSubmitting(false);
       history.push({
         pathname: "/welcome",

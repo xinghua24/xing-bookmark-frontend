@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -13,6 +13,9 @@ import Navbar from "./components/Navbar";
 import Signin from "./components/Signin";
 import { Container } from "@material-ui/core";
 import VerifySignup from "./components/VerifySignup";
+import SecuredRoute from "./utilities/SecuredRoute";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./store/user";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -21,15 +24,18 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
   return (
     <Router>
       <div className={classes.root}>
         <Navbar />
         <Container maxWidth="md">
           <Switch>
-            <Route path="/signin" exact>
-              <Signin />
-            </Route>
+            <Route path="/signin" exact component={Signin} />
             <Route path="/signup" exact>
               <Signup />
             </Route>
@@ -39,15 +45,17 @@ function App() {
             <Route path="/confirmsignup" exact>
               <ConfirmSignup />
             </Route>
-            <Route path="/changepassword" exact>
-              <ChangePassword />
-            </Route>
-            <Route path="/changepasswordconfirm" exact>
-              <ChangePasswordConfirm />
-            </Route>
-            <Route path="/forgetpassword" exact>
-              <ForgetPassword />
-            </Route>
+            <SecuredRoute
+              path="/changepassword"
+              component={ChangePassword}
+              exact
+            ></SecuredRoute>
+            <SecuredRoute
+              path="/changepasswordconfirm"
+              component={ChangePasswordConfirm}
+              exact
+            />
+            <Route path="/forgetpassword" component={ForgetPassword} exact />
             <Route path="/forgetpasswordverification" exact>
               <ForgetPasswordVerification />
             </Route>

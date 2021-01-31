@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Auth } from "aws-amplify";
 
 const slice = createSlice({
   name: "username",
@@ -15,6 +16,20 @@ const slice = createSlice({
     },
   },
 });
+
+// async action
+export function loadUser() {
+  return async (dispatch: any) => {
+    try {
+      const user = await Auth.currentUserPoolUser();
+      if (!!user) {
+        dispatch(loginSuccess(user.username));
+      }
+    } catch (error) {
+      // no login user yet
+    }
+  };
+}
 
 export const { loginSuccess, logoutSuccess } = slice.actions;
 export default slice.reducer;

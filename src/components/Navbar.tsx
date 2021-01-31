@@ -47,6 +47,7 @@ function Navbar() {
   const classes = useStyles();
 
   async function signOut() {
+    setAnchorEl(null);
     try {
       await Auth.signOut();
       dispatch(logoutSuccess());
@@ -57,6 +58,7 @@ function Navbar() {
   }
 
   async function handleChangePassword() {
+    setAnchorEl(null);
     history.push("/changepassword");
   }
 
