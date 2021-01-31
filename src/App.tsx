@@ -16,6 +16,7 @@ import VerifySignup from "./components/VerifySignup";
 import SecuredRoute from "./utilities/SecuredRoute";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./store/user";
+import Home from "./components/Home";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -29,6 +30,7 @@ function App() {
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
+
   return (
     <Router>
       <div className={classes.root}>
@@ -36,35 +38,29 @@ function App() {
         <Container maxWidth="md">
           <Switch>
             <Route path="/signin" exact component={Signin} />
-            <Route path="/signup" exact>
-              <Signup />
-            </Route>
-            <Route path="/verifySignup" exact>
-              <VerifySignup />
-            </Route>
-            <Route path="/confirmsignup" exact>
-              <ConfirmSignup />
-            </Route>
+            <Route path="/signup" exact component={Signup} />
+            <Route path="/verifySignup" exact component={VerifySignup} />
+            <Route path="/confirmsignup" exact component={ConfirmSignup} />
+            <Route path="/forgetpassword" exact component={ForgetPassword} />
+            <Route
+              path="/forgetpasswordverification"
+              exact
+              component={ForgetPasswordVerification}
+            />
             <SecuredRoute
               path="/changepassword"
-              component={ChangePassword}
               exact
-            ></SecuredRoute>
+              component={ChangePassword}
+            />
             <SecuredRoute
               path="/changepasswordconfirm"
-              component={ChangePasswordConfirm}
               exact
+              component={ChangePasswordConfirm}
             />
-            <Route path="/forgetpassword" component={ForgetPassword} exact />
-            <Route path="/forgetpasswordverification" exact>
-              <ForgetPasswordVerification />
-            </Route>
-            <Route path="/welcome" exact>
-              <Welcome />
-            </Route>
-            <Route path="/">
-              <Welcome />
-            </Route>
+            <SecuredRoute path="/home" exact component={Home} />
+            <Route path="/welcome" exact component={Welcome} />
+            {/* This Route with path "/" need to be the Lastest because it is not a exact match*/}
+            <Route path="/" component={Welcome} />{" "}
           </Switch>
         </Container>
       </div>
