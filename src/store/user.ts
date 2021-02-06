@@ -5,10 +5,15 @@ const slice = createSlice({
   name: "username",
   initialState: {
     username: null,
+    isLoading: true,
   },
   reducers: {
+    loadComplete: (state) => {
+      state.isLoading = false;
+    },
     loginSuccess: (state, action) => {
       state.username = action.payload;
+      state.isLoading = false;
     },
     logoutSuccess: (state) => {
       state.username = null;
@@ -27,9 +32,10 @@ export function loadUser() {
       }
     } catch (error) {
       // no login user yet
+      dispatch(loadComplete());
     }
   };
 }
 
-export const { loginSuccess, logoutSuccess } = slice.actions;
+export const { loginSuccess, logoutSuccess, loadComplete } = slice.actions;
 export default slice.reducer;
