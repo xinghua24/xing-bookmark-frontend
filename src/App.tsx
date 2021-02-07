@@ -35,7 +35,7 @@ function App() {
     <Router>
       <div className={classes.root}>
         <Navbar />
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
           <Switch>
             <Route path="/signin" exact component={Signin} />
             <Route path="/signup" exact component={Signup} />

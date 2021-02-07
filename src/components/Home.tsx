@@ -13,12 +13,7 @@ function Welcome() {
 
   const classes = useStyles();
 
-  return (
-    <Container maxWidth="lg" component="main">
-      <p>Home</p>
-      <BookmarkList />
-    </Container>
-  );
+  return <BookmarkList />;
 }
 
 export default Welcome;

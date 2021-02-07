@@ -100,7 +100,7 @@ function Navbar() {
   );
   return (
     <AppBar position="static">
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Toolbar className={classes.toolbar}>
           <Typography variant="h5" className={classes.title}>
             <Link
