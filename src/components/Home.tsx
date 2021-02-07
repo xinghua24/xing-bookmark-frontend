@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Typography } from "@material-ui/core";
+import { Auth } from "aws-amplify";
+import BookmarkList from "./bookmark/BookmarkList";
 
 function Welcome() {
   const useStyles = makeStyles((theme) => ({
@@ -14,6 +16,7 @@ function Welcome() {
   return (
     <Container maxWidth="lg" component="main">
       <p>Home</p>
+      <BookmarkList />
     </Container>
   );
 }
