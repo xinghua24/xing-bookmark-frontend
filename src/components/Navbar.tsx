@@ -7,8 +7,7 @@ import Container from "@material-ui/core/Container";
 import { Button, IconButton, Link, Menu, MenuItem } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Auth } from "aws-amplify";
-import { logoutSuccess } from "../store/user";
+import { userSignOut } from "../store/user";
 import { AccountCircle } from "@material-ui/icons";
 
 function Navbar() {
@@ -46,18 +45,13 @@ function Navbar() {
   }));
   const classes = useStyles();
 
-  async function signOut() {
+  function signOut() {
     setAnchorEl(null);
-    try {
-      await Auth.signOut();
-      dispatch(logoutSuccess());
-      history.push("/signin");
-    } catch (error) {
-      console.log("error signing out: ", error);
-    }
+    dispatch(userSignOut());
+    history.push("/signin");
   }
 
-  async function handleChangePassword() {
+  function handleChangePassword() {
     setAnchorEl(null);
     history.push("/changepassword");
   }

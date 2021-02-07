@@ -15,20 +15,27 @@ const Welcome: React.FC = () => {
 
   const classes = useStyles();
 
-  return isLoading ? null : !isLoading && username ? (
-    <Redirect to="/home" />
-  ) : (
-    <Container maxWidth="lg" component="main" className={classes.heroContent}>
-      <Typography
-        component="h1"
-        variant="h2"
-        align="center"
-        color="textPrimary"
-        gutterBottom
-      >
-        Welcome to Xing's Bookmark
-      </Typography>
-    </Container>
+  return (
+    <>
+      {!isLoading && username && <Redirect to="/home" />}
+      {!isLoading && !username && (
+        <Container
+          maxWidth="lg"
+          component="main"
+          className={classes.heroContent}
+        >
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            Welcome to Xing's Bookmark
+          </Typography>
+        </Container>
+      )}
+    </>
   );
 };
 

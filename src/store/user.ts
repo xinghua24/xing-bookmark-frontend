@@ -37,5 +37,16 @@ export function loadUser() {
   };
 }
 
+export function userSignOut() {
+  return async (dispatch: any) => {
+    try {
+      await Auth.signOut();
+      dispatch(logoutSuccess());
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  };
+}
+
 export const { loginSuccess, logoutSuccess, loadComplete } = slice.actions;
 export default slice.reducer;
