@@ -25,6 +25,12 @@ const slice = createSlice({
       state.bookmarks = [];
       state.error.push(action.payload);
     },
+    deleteBookmark: (state, action) => {
+      const newBookmarks = state.bookmarks.filter(
+        (item) => item.bookmarkid !== action.payload
+      );
+      state.bookmarks = newBookmarks;
+    },
   },
 });
 
@@ -52,10 +58,37 @@ export function loadBookmarks() {
   };
 }
 
+// async action
+export function deleteBookmarksAsync(id: number) {
+  return async (dispatch: any) => {
+    try {
+      const idToken = await (await Auth.currentSession())
+        .getIdToken()
+        .getJwtToken();
+      const response = await fetch(
+        `https://api.xinghuatest.com/bookmarks/${id}`,
+        {
+          method: "DELETE",
+          headers: new Headers({
+            Authorization: "" + idToken,
+          }),
+        }
+      );
+      const data = await response.json();
+
+      console.log(data);
+      dispatch(deleteBookmark(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export const {
   loadBookmarksStarted,
   loadBookmarksFailure,
   loadBookmarksSuccess,
+  deleteBookmark,
 } = slice.actions;
 
 export default slice.reducer;

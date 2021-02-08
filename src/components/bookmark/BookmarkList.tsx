@@ -14,7 +14,7 @@ import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
-
+import { deleteBookmark, deleteBookmarksAsync } from "../../store/bookmarks";
 function BookmarkList() {
   const dispatch = useDispatch();
 
@@ -36,10 +36,15 @@ function BookmarkList() {
     main: {
       marginTop: theme.spacing(2),
     },
+    link: {
+      textDecoration: "none",
+    },
   }));
 
   const handleEditBookmark = () => {};
-  const deleteBookmark = (id: number) => {};
+  const handleDeleteBookmark = (id: number) => {
+    dispatch(deleteBookmarksAsync(id));
+  };
   const classes = useStyles();
 
   return (
@@ -49,8 +54,7 @@ function BookmarkList() {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Description</TableCell>
-                <TableCell>URL</TableCell>
+                <TableCell>Bookmark</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -59,10 +63,13 @@ function BookmarkList() {
                 ? bookmarks.map((bookmark) => (
                     <TableRow key={bookmark.bookmarkid} hover={true}>
                       <TableCell component="th" scope="row">
-                        {bookmark.description}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        <a href={bookmark.url}>{bookmark.url}</a>
+                        <a
+                          href={bookmark.url}
+                          color="primary"
+                          className={classes.link}
+                        >
+                          {bookmark.description}
+                        </a>
                       </TableCell>
                       <TableCell align="right">
                         <Button
@@ -76,7 +83,9 @@ function BookmarkList() {
                         <Button
                           variant="outlined"
                           size="small"
-                          onClick={() => deleteBookmark(bookmark.bookmarkid)}
+                          onClick={() =>
+                            handleDeleteBookmark(bookmark.bookmarkid)
+                          }
                         >
                           <DeleteIcon fontSize="small" />
                           Delete
