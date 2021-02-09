@@ -8,7 +8,7 @@ import * as yup from "yup";
 import MyTextField from "../../formcontrols/MyTextField";
 
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Auth } from "aws-amplify";
 import { Bookmark } from "../../model/Bookmark";
 
@@ -36,10 +36,13 @@ const validationSchema = yup.object({
   description: yup.string(),
 });
 
-const AddBookmark: React.FC = () => {
+const EditBookmark: React.FC = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const username = useSelector((state: any) => state.user.username);
+
+  const existingBookmark: Bookmark = history.location.state as Bookmark;
 
   const submitHandler = async (
     data: any,
@@ -51,18 +54,20 @@ const AddBookmark: React.FC = () => {
     const idToken = await (await Auth.currentSession())
       .getIdToken()
       .getJwtToken();
-    let newBookmark: Bookmark = {
+    let updatedBookmark: Bookmark = {
       description: data.description,
       url: data.url,
-      userid: username,
     };
-    fetch(`https://api.xinghuatest.com/bookmarks`, {
-      method: "POST",
-      headers: new Headers({
-        Authorization: "" + idToken,
-      }),
-      body: JSON.stringify(newBookmark),
-    });
+    const response = await fetch(
+      `https://api.xinghuatest.com/bookmarks/${existingBookmark.bookmarkid}`,
+      {
+        method: "PUT",
+        headers: new Headers({
+          Authorization: "" + idToken,
+        }),
+        body: JSON.stringify(updatedBookmark),
+      }
+    );
 
     try {
       setSubmitting(false);
@@ -78,7 +83,10 @@ const AddBookmark: React.FC = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Formik
-          initialValues={{ url: "", description: "" }}
+          initialValues={{
+            url: existingBookmark.url,
+            description: existingBookmark.description,
+          }}
           onSubmit={submitHandler}
           validationSchema={validationSchema}
         >
@@ -94,7 +102,7 @@ const AddBookmark: React.FC = () => {
                 color="primary"
                 disabled={isSubmitting}
               >
-                Add
+                Update
               </Button>
 
               {"message" in errors ? (
@@ -108,4 +116,4 @@ const AddBookmark: React.FC = () => {
   );
 };
 
-export default AddBookmark;
+export default EditBookmark;

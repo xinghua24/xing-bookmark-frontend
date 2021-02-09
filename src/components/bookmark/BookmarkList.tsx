@@ -15,9 +15,11 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
 import { deleteBookmark, deleteBookmarksAsync } from "../../store/bookmarks";
+import { useHistory } from "react-router-dom";
+
 function BookmarkList() {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const bookmarks: Bookmark[] = useSelector(
     (state: any) => state.bookmarks.bookmarks
   );
@@ -39,7 +41,12 @@ function BookmarkList() {
     },
   }));
 
-  const handleEditBookmark = () => {};
+  const handleEditBookmark = (bookmark: Bookmark) => {
+    history.push({
+      pathname: "/editbookmark",
+      state: bookmark,
+    });
+  };
   const handleDeleteBookmark = (id: number) => {
     dispatch(deleteBookmarksAsync(id));
   };
@@ -73,7 +80,7 @@ function BookmarkList() {
                         <Button
                           variant="outlined"
                           size="small"
-                          onClick={() => handleEditBookmark()}
+                          onClick={() => handleEditBookmark(bookmark)}
                         >
                           <EditIcon fontSize="small" />
                           Edit

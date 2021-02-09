@@ -1,6 +1,6 @@
 export interface Bookmark {
   bookmarkid?: number;
-  description: string;
+  description?: string;
   url: string;
-  userid: string;
+  userid?: string;
 }
