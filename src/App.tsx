@@ -17,6 +17,7 @@ import SecuredRoute from "./utilities/SecuredRoute";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./store/user";
 import Home from "./components/Home";
+import AddBookmark from "./components/bookmark/AddBookmark";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -59,6 +60,7 @@ function App() {
             />
             <SecuredRoute path="/home" exact component={Home} />
             <Route path="/welcome" exact component={Welcome} />
+            <SecuredRoute path="/addbookmark" exact component={AddBookmark} />
             {/* This Route with path "/" need to be the Lastest because it is not a exact match*/}
             <Route path="/" component={Welcome} />{" "}
           </Switch>

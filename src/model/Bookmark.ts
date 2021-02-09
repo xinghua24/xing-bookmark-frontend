@@ -1,5 +1,5 @@
 export interface Bookmark {
-  bookmarkid: number;
+  bookmarkid?: number;
   description: string;
   url: string;
   userid: string;

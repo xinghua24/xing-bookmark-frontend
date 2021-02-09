@@ -27,14 +27,12 @@ function BookmarkList() {
   }, []);
 
   const useStyles = makeStyles((theme) => ({
-    heroContent: {
-      padding: theme.spacing(10, 0, 6),
-    },
     paper: {
       width: "100%",
     },
     main: {
       marginTop: theme.spacing(2),
+      padding: 0,
     },
     link: {
       textDecoration: "none",
@@ -48,7 +46,7 @@ function BookmarkList() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg" component="main" className={classes.main}>
+    <Container maxWidth="lg" className={classes.main}>
       <Paper elevation={0} className={classes.paper}>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
@@ -84,7 +82,7 @@ function BookmarkList() {
                           variant="outlined"
                           size="small"
                           onClick={() =>
-                            handleDeleteBookmark(bookmark.bookmarkid)
+                            handleDeleteBookmark(bookmark.bookmarkid || -1)
                           }
                         >
                           <DeleteIcon fontSize="small" />
