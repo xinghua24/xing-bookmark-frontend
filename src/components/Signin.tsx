@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
@@ -9,7 +9,7 @@ import Container from "@material-ui/core/Container";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import MyTextField from "../formcontrols/MyTextField";
-import { Auth } from "aws-amplify";
+import { Auth, Hub } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../store/user";
@@ -43,6 +43,21 @@ const Signin: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "signIn":
+          console.log(data);
+          break;
+        case "signOut":
+          console.log("signout");
+          break;
+        case "customOAuthState":
+          console.log("customOAuthState");
+      }
+    });
+  });
+
   const submitHandler = async (
     data: any,
     { setSubmitting, setErrors }: any
@@ -61,6 +76,10 @@ const Signin: React.FC = () => {
     }
   };
 
+  const handleGoogleSignin = async (event: any) => {
+    event.preventDefault();
+    Auth.federatedSignIn({ customProvider: "Google" });
+  };
   return (
     <Container maxWidth="xs">
       <CssBaseline />
@@ -93,18 +112,21 @@ const Signin: React.FC = () => {
                 Sign in
               </Button>
 
-              <Grid container>
-                <Grid item xs>
-                  <Link href="/forgetpassword" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
+              <div>
+                <Link href="/forgetpassword" variant="body2">
+                  Forgot password?
+                </Link>
+              </div>
+              <div>
+                <Link href="/signup" variant="body2">
+                  Don't have an account? Sign Up
+                </Link>
+              </div>
+              <div>
+                <Link href="" variant="body2" onClick={handleGoogleSignin}>
+                  Try Sign In with Google
+                </Link>
+              </div>
 
               {"message" in errors ? (
                 <div className={classes.error}>{errors["message"]}</div>

@@ -12,6 +12,14 @@ Amplify.configure({
   aws_cognito_region: "us-east-1",
   aws_user_pools_id: process.env.REACT_APP_USERPOOL_ID,
   aws_user_pools_web_client_id: process.env.REACT_APP_USERPOOL_WEB_CLIENT_ID,
+  oauth: {
+    domain:
+      "bookmark-wiotufh392239hyr9hfbnv93232.auth.us-east-1.amazoncognito.com",
+    scope: ["email", "profile", "openid"],
+    redirectSignIn: "http://localhost:3000",
+    redirectSignOut: "http://localhost:3000",
+    responseType: "code",
+  },
 });
 ReactDOM.render(
   <Provider store={store}>
