@@ -16,8 +16,8 @@ Amplify.configure({
     domain:
       "bookmark-wiotufh392239hyr9hfbnv93232.auth.us-east-1.amazoncognito.com",
     scope: ["email", "profile", "openid"],
-    redirectSignIn: "http://localhost:3000",
-    redirectSignOut: "http://localhost:3000",
+    redirectSignIn: "https://xingbookmark.com",
+    redirectSignOut: "https://xingbookmark.com",
     responseType: "code",
   },
 });
