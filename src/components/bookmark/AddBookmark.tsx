@@ -60,7 +60,7 @@ const AddBookmark: React.FC = () => {
       .getJwtToken();
     let newBookmark: Bookmark = {
       description: data.description,
-      url: data.urlWithProtocol,
+      url: urlWithProtocol,
       userid: username,
     };
     await fetch(`https://api.xingbookmark.com/bookmarks`, {
