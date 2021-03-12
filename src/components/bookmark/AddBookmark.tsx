@@ -48,12 +48,19 @@ const AddBookmark: React.FC = () => {
     setSubmitting(true);
     console.log("submit: ", data);
 
+    let urlWithProtocol = "";
+    if (!data.url.startsWith("http")) {
+      urlWithProtocol = "https://" + data.url;
+    } else {
+      urlWithProtocol = data.url;
+    }
+
     const idToken = await (await Auth.currentSession())
       .getIdToken()
       .getJwtToken();
     let newBookmark: Bookmark = {
       description: data.description,
-      url: data.url,
+      url: data.urlWithProtocol,
       userid: username,
     };
     await fetch(`https://api.xingbookmark.com/bookmarks`, {
