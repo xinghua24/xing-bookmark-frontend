@@ -59,7 +59,7 @@ const EditBookmark: React.FC = (props) => {
       url: data.url,
     };
     const response = await fetch(
-      `https://api.xinghuatest.com/bookmarks/${existingBookmark.bookmarkid}`,
+      `https://api.xingbookmark.com/bookmarks/${existingBookmark.bookmarkid}`,
       {
         method: "PUT",
         headers: new Headers({

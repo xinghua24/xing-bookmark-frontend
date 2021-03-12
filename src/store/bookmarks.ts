@@ -42,7 +42,7 @@ export function loadBookmarks() {
       const idToken = await (await Auth.currentSession())
         .getIdToken()
         .getJwtToken();
-      const response = await fetch(`https://api.xinghuatest.com/bookmarks`, {
+      const response = await fetch(`https://api.xingbookmark.com/bookmarks`, {
         method: "GET",
         headers: new Headers({
           Authorization: "" + idToken,
@@ -66,7 +66,7 @@ export function deleteBookmarksAsync(id: number) {
         .getIdToken()
         .getJwtToken();
       const response = await fetch(
-        `https://api.xinghuatest.com/bookmarks/${id}`,
+        `https://api.xingbookmark.com/bookmarks/${id}`,
         {
           method: "DELETE",
           headers: new Headers({
