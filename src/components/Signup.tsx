@@ -128,13 +128,6 @@ const Login: React.FC = () => {
               {"message" in errors ? (
                 <div className={classes.error}>{errors["message"]}</div>
               ) : null}
-
-              <pre style={{ textAlign: "left" }}>
-                {JSON.stringify(values, null, 2)}
-              </pre>
-              <pre style={{ textAlign: "left" }}>
-                {JSON.stringify(errors, null, 2)}
-              </pre>
             </Form>
           )}
         </Formik>

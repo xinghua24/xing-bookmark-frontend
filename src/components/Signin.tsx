@@ -132,12 +132,12 @@ const Signin: React.FC = () => {
                 <div className={classes.error}>{errors["message"]}</div>
               ) : null}
 
-              <pre style={{ textAlign: "left" }}>
+              {/* <pre style={{ textAlign: "left" }}>
                 {JSON.stringify(values, null, 2)}
               </pre>
               <pre style={{ textAlign: "left" }}>
                 {JSON.stringify(errors, null, 2)}
-              </pre>
+              </pre> */}
             </Form>
           )}
         </Formik>
