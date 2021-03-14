@@ -13,6 +13,7 @@ import { Auth, Hub } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../store/user";
+import { LoginType } from "../store/LoginType";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -66,8 +67,13 @@ const Signin: React.FC = () => {
     console.log("submit: ", data);
     try {
       const user = await Auth.signIn(data.username, data.password);
-      console.log(user);
-      await dispatch(loginSuccess(user.username));
+      //  console.log(user);
+      await dispatch(
+        loginSuccess({
+          username: user.username,
+          loginType: LoginType.USERNAME_PASSWORD,
+        })
+      );
       setSubmitting(false);
       history.push("/");
     } catch (error) {

@@ -9,12 +9,13 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignOut } from "../store/user";
 import { AccountCircle } from "@material-ui/icons";
+import { LoginType } from "../store/LoginType";
 
 function Navbar() {
   const history = useHistory();
   const dispatch = useDispatch();
   const username = useSelector((state: any) => state.user.username);
-
+  const loginType = useSelector((state: any) => state.user.loginType);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event: any) => {
@@ -48,7 +49,7 @@ function Navbar() {
   function signOut() {
     setAnchorEl(null);
     dispatch(userSignOut());
-    history.push("/signin");
+    history.push("/");
   }
 
   function handleChangePassword() {
@@ -74,7 +75,9 @@ function Navbar() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
+        {loginType === LoginType.USERNAME_PASSWORD && (
+          <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
+        )}
         <MenuItem onClick={signOut}>Sign out</MenuItem>
       </Menu>
     </>
