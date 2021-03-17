@@ -33,16 +33,6 @@ export function loadUser() {
         await Auth.currentSession()
       ).getIdToken().payload.identities);
 
-      console.log(
-        "idToken payload" +
-          JSON.stringify(
-            await (await Auth.currentSession()).getIdToken().payload,
-            null,
-            2
-          )
-      );
-      console.log("isIdentityLogin " + isIdentityLogin);
-
       const loginType = isIdentityLogin
         ? LoginType.IDENTITY
         : LoginType.USERNAME_PASSWORD;
@@ -52,7 +42,7 @@ export function loadUser() {
         );
       }
     } catch (error) {
-      // no login user yet
+      // no login user yetR
       dispatch(loadComplete());
     }
   };

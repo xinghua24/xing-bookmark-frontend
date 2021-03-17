@@ -64,7 +64,7 @@ const Signin: React.FC = () => {
     { setSubmitting, setErrors }: any
   ) => {
     setSubmitting(true);
-    console.log("submit: ", data);
+    //console.log("submit: ", data);
     try {
       const user = await Auth.signIn(data.username, data.password);
       //  console.log(user);

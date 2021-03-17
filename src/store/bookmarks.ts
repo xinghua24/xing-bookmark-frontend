@@ -50,7 +50,7 @@ export function loadBookmarks() {
       });
       const data = await response.json();
 
-      console.log(data);
+      // console.log(data);
       dispatch(loadBookmarksSuccess(data));
     } catch (error) {
       dispatch(loadBookmarksFailure(error));
@@ -76,7 +76,7 @@ export function deleteBookmarksAsync(id: number) {
       );
       const data = await response.json();
 
-      console.log(data);
+      // console.log(data);
       dispatch(deleteBookmark(id));
     } catch (error) {
       console.log(error);
