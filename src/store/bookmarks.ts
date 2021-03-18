@@ -74,9 +74,7 @@ export function deleteBookmarksAsync(id: number) {
           }),
         }
       );
-      const data = await response.json();
-
-      // console.log(data);
+      // console.log(response);
       dispatch(deleteBookmark(id));
     } catch (error) {
       console.log(error);
