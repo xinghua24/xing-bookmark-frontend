@@ -42,7 +42,7 @@ export function loadBookmarks() {
       const idToken = await (await Auth.currentSession())
         .getIdToken()
         .getJwtToken();
-      const response = await fetch(`https://api.xingbookmark.com/bookmarks`, {
+      const response = await fetch(`/bookmarks`, {
         method: "GET",
         headers: new Headers({
           Authorization: "" + idToken,
@@ -65,16 +65,12 @@ export function deleteBookmarksAsync(id: number) {
       const idToken = await (await Auth.currentSession())
         .getIdToken()
         .getJwtToken();
-      const response = await fetch(
-        `https://api.xingbookmark.com/bookmarks/${id}`,
-        {
-          method: "DELETE",
-          headers: new Headers({
-            Authorization: "" + idToken,
-          }),
-        }
-      );
-      const data = await response.json();
+      const response = await fetch(`/bookmarks/${id}`, {
+        method: "DELETE",
+        headers: new Headers({
+          Authorization: "" + idToken,
+        }),
+      });
 
       // console.log(data);
       dispatch(deleteBookmark(id));

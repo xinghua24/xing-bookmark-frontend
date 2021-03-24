@@ -58,16 +58,13 @@ const EditBookmark: React.FC = (props) => {
       description: data.description,
       url: data.url,
     };
-    const response = await fetch(
-      `https://api.xingbookmark.com/bookmarks/${existingBookmark.bookmarkid}`,
-      {
-        method: "PUT",
-        headers: new Headers({
-          Authorization: "" + idToken,
-        }),
-        body: JSON.stringify(updatedBookmark),
-      }
-    );
+    const response = await fetch(`/bookmarks/${existingBookmark.bookmarkid}`, {
+      method: "PUT",
+      headers: new Headers({
+        Authorization: "" + idToken,
+      }),
+      body: JSON.stringify(updatedBookmark),
+    });
 
     try {
       setSubmitting(false);
