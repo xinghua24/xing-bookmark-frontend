@@ -42,7 +42,7 @@ export function loadBookmarks() {
       const idToken = await (await Auth.currentSession())
         .getIdToken()
         .getJwtToken();
-      const response = await fetch(`/bookmarks`, {
+      const response = await fetch(`/api/bookmarks`, {
         method: "GET",
         headers: new Headers({
           Authorization: "" + idToken,
@@ -65,7 +65,7 @@ export function deleteBookmarksAsync(id: number) {
       const idToken = await (await Auth.currentSession())
         .getIdToken()
         .getJwtToken();
-      const response = await fetch(`/bookmarks/${id}`, {
+      const response = await fetch(`/api/bookmarks/${id}`, {
         method: "DELETE",
         headers: new Headers({
           Authorization: "" + idToken,
