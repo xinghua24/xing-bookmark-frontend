@@ -63,7 +63,7 @@ const AddBookmark: React.FC = () => {
       url: urlWithProtocol,
       userid: username,
     };
-    await fetch(`/bookmarks`, {
+    await fetch(`/api/bookmarks`, {
       method: "POST",
       headers: new Headers({
         Authorization: "" + idToken,
