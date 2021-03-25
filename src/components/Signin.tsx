@@ -44,34 +44,21 @@ const Signin: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [user, setUser] = useState(null);
-
   useEffect(() => {
-    Hub.listen('auth', ({ payload: { event, data } }) => {
+    Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
-        case 'signIn':
-        case 'cognitoHostedUI':
-          getUser().then(userData => setUser(userData));
+        case "signIn":
+          console.log(data);
           break;
-        case 'signOut':
-          setUser(null);
+        case "signOut":
+          console.log("signout");
           break;
-        case 'signIn_failure':
-        case 'cognitoHostedUI_failure':
-          console.log('Sign in failure', data);
-          break;
+        case "customOAuthState":
+          console.log("customOAuthState");
       }
     });
+  });
 
-    getUser().then(userData => setUser(userData));
-  }, []);
-  
- function getUser() {
-    return Auth.currentAuthenticatedUser()
-      .then(userData => userData)
-      .catch(() => console.log('Not signed in'));
-  }
-  
   const submitHandler = async (
     data: any,
     { setSubmitting, setErrors }: any
